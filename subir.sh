@@ -1,7 +1,7 @@
 #/bin/bash
-echo "-----------------------------"
-echo "Actualizando respositorio PHP"
-echo "-----------------------------"
+echo "------------------------------------------"
+echo "Actualizando respositorio Des Web Servidor"
+echo "------------------------------------------"
 
 echo "Paso 1: Acutalizar carpeta local."
 git pull
