@@ -4,7 +4,7 @@
         if(! isset($_REQUEST["enviar"])){
         ?>
 
-        <form action="procform.php" method="post">
+        <form action="procForm.php" method="post">
             <input type="text" name="texto"/>
             <input type="submit" name="enviar" value="Enviar">
         </form>
