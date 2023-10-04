@@ -1,34 +1,47 @@
 <html>
     <head>
-        <meta http-equiv="refresh" content="5">
+
     </head>
     <body>
         <?php 
-            $numMaquina = rand(1,100);
-
-            $num = $_REQUEST['num'];
-            $contador = 1;
+            // $numMaquina = rand(1,100);
+            $numMaquina = 12;
+            $contador = 0;
             
-            if (isset($enviar)){
+            if ( isset($_REQUEST["adivinar"])){
+                $num = $_REQUEST["num"];
+
                 if ($num == $numMaquina){
-                    echo "<br> Tu número " . $_REQUEST['num'] . "es correcto<br>";
+                    $contador= $_REQUEST["contador"]+1;
+                    echo "<br> Tu número " . $num . " es correcto<br>";
                     echo "<br> Intentos: " . $contador;
                 } elseif ($num > $numMaquina){
-                    echo "<br> Tu número " . $_REQUEST['num'] . "es mayor. Intenta otra vez<br>";
-                    $contador++;
+                    $contador= $_REQUEST["contador"]+1;
+                    echo "<br> Tu número " . $num . " es mayor.<br>";
+                    echo "<br> Intentos: " . $contador;
+                    // echo '<br><a href="adivinarNumero.php" >Intentar otra vez.</a>';
+                    
                 } else {
-                    echo "<br> Tu número " . $_REQUEST['num'] . "es menor. Intenta otra vez<br>";
-                    $contador++;
+                    $contador= $_REQUEST["contador"]+1;
+                    echo "<br> Tu número " . $num . " es menor.<br>";
+                    echo "<br> Intentos: " . $contador;
+                    // echo '<br><a href="adivinarNumero.php" >Intentar otra vez.</a>';
                 }
             }
-
-
-
-
-            $enviar = $_REQUEST['enviar'];
-            if ($enviar)
-
     ?>
+
+    <h1>Adivina un numero del 1 al 100</h1>
+
+    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
+        <label for="nombre">Numero: </label>
+        <input type="number" name="num" min="1" max="100" required >
+        <input type="hidden" name="numMaquina" value="<?php echo $numMaquina; ?>">
+        <input type="hidden" name="contador" value="<?php echo $contador; ?>">
+        <input type="submit" name="adivinar" value="Adivinar" />
+    </form>
+
+
+
     </body>
     
 </html>
