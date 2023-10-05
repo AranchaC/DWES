@@ -22,17 +22,24 @@
         if (!isset($_SESSION["contador"])){
             $_SESSION["contador"] = 0;
         }
-        $numMaquina = rand(1,100);
+        if (!isset($_SESSION["numMaquina"])){
+            $_SESSION["numMaquina"] = rand(1,100);
+        }
+        // $numMaquina = rand(1,100);
         //$numMaquina = 12;
         // $contador = 0;
         
         if ( isset($_REQUEST["adivinar"])){
             $num = $_REQUEST["num"];
+            $numMaquina = $_SESSION["numMaquina"];
 
             if ($num == $numMaquina){
                 $_SESSION["contador"]++;
                 echo "<br> Tu número " . $num . " es correcto<br>¡HAS GANADO!<br>";
                 echo "<br> Intentos: " . $_SESSION["contador"] . "<br>";
+                $_SESSION["contador"] = 0;
+                $_SESSION["numMaquina"] = rand(1,100);
+
             } elseif ($num > $numMaquina){
                 $_SESSION["contador"]++;
                 echo "<br> Tu número " . $num . " es mayor.<br>";
