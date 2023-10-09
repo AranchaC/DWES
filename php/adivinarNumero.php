@@ -13,8 +13,17 @@
 
             <?php 
 
-                $numMaquina = isset($_POST["numMaquina"]) ? $_POST["numMaquina"] : rand(1, 100);
-                $contador = isset($_POST["contador"]) ? $_POST["contador"] : 0;
+                if (isset($_POST["numMaquina"])) {
+                    $numMaquina = $_POST["numMaquina"];
+                } else {
+                    $numMaquina = rand(1, 100);
+                }
+
+                if (isset($_POST["contador"])) {
+                    $contador = $_POST["contador"];
+                } else {
+                    $contador = 0;
+                }
 
                 // $numMaquina = rand(1,100);
                 //$numMaquina = 12;
