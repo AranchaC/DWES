@@ -10,12 +10,8 @@
             <input type="submit" name="enviar" value="Enviar" />
             <br/><br/>
             <textarea readonly name="area" id="" cols="30" rows="10" 
-                value="<?php echo $texto; ?>"></textarea>
+                value="<?php echo $mensaje; ?>"></textarea>
 
-
-            <input type="hidden" name="numMaquina" value="<?php echo $numMaquina; ?>">
-            <input type="hidden" name="contador" value="<?php echo $contador; ?>">
- 
         </form>
 
     </body>
