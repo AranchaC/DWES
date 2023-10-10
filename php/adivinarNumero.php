@@ -43,11 +43,11 @@
 
                     } elseif ($num > $numMaquina){
                         $contador++;
-                        echo "<br> Tu número " . $num . " es mayor.<br>Vuelve a intentarlo.";
+                        echo "<br> Tu número " . $num . " es mayor.<br>Vuelve a intentarlo.<br>";
                         echo "<br> Intentos: " . $contador . "<br>";                   
                     } else {
                         $contador++;
-                        echo "<br> Tu número " . $num . " es menor.<br>Vuelve a intentarlo.";
+                        echo "<br> Tu número " . $num . " es menor.<br>Vuelve a intentarlo.<br>";
                         echo "<br> Intentos: " . $contador . "<br>";
                     }
                 }
