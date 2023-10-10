@@ -1,9 +1,6 @@
 <html>
-    <head>
-
-    </head>
     <body>
-    <h1></h1>
+    <h1>BLOG FAKE</h1>
         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
             <label for="nombre">Nuevo mensaje: </label>
             <input type="text" name="texto" required >
@@ -25,11 +22,8 @@
             }
             ?>
             </textarea>
-
         </form>
-
-    </body>
-    
+    </body> 
 </html>
 
 

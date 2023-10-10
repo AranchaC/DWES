@@ -28,8 +28,8 @@
              Y además también equivale(n) a: <br/>
              $dolares dólares USA.<br/>
              $libras libras esterlinas.<br/>
-             $yenes yenes japones.<br/>
-             $francos franos suizos.<br/>             
+             $yenes yenes japoneses.<br/>
+             $francos francos suizos.<br/>             
              </p>";
         } else {
             // Mensaje de error si no se ingresó una cantidad válida
@@ -38,14 +38,14 @@
 
         // Enlace para volver
         echo '<a href="euros_ptas.php">[Volver]</a>';
-    } else {
+    } else { // si no se envía el formulario, se crea:
         // Formulario para ingresar la cantidad en euros
         echo '<form method="post" action="">
                   <label for="euros">Cantidad en euros:</label>
                   <input type="number" name="euros">
                   <input type="submit" name="convertir" value="Convertir">
               </form>';
-    }
+    }//else
     ?>
 
 </body>
