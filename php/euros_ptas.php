@@ -16,9 +16,20 @@
         if (! $euros == "") {
             // Calcular la equivalencia en pesetas
             $pesetas = $euros * 166.386;
+            $dolares = $euros * 1.325;
+            $libras = $euros * 0.927;
+            $yenes = $euros * 118.232;
+            $francos = $euros * 1.515;
 
             // Mostrar el resultado
-            echo "<p>$euros euro(s) equivale(n) a $pesetas pesetas</p>";
+            echo "<p>$euros euro(s) equivale(n) a:
+             $pesetas pesetas.<br/><br/> Y además a: <br/>
+             $dolares dólares USA.<br/>
+             $libras libras esterlinas.<br/>
+             $yenes yenes japones.<br/>
+             $francos franos suizos.<br/>
+             
+             </p>";
         } else {
             // Mensaje de error si no se ingresó una cantidad válida
             echo "<p>Debe introducir una cantidad.</p>";
