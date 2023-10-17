@@ -27,12 +27,11 @@
                 }
 
                 // Verifica si se ha enviado el formulario con el botón "Adivinar".
-                if ( isset($_REQUEST["adivinar"])){
+                if (isset($_REQUEST["adivinar"])){
                     $num = $_REQUEST["num"];
-
+                    $contador++; // aumentamos el contador en 1 para sumar un intento.
                     // Se comprueba si el número ingresado en casilla es igual al número aleatorio generado.
-                    if ($num == $numMaquina){
-                        $contador++; // aumentamos el contador en 1 para sumar un intento.
+                    if ($num == $numMaquina){                       
                         echo "<br> Tu número " . $num . " es correcto<br>¡HAS GANADO!<br>";
                         echo "<br> Intentos: " . $contador . "<br>";
                         echo "<br> Introduce otro número para volver a jugar.";
@@ -42,11 +41,9 @@
                         $numMaquina = rand(1, 100);
 
                     } elseif ($num > $numMaquina){
-                        $contador++;
                         echo "<br> Tu número " . $num . " es mayor.<br>Vuelve a intentarlo.<br>";
                         echo "<br> Intentos: " . $contador . "<br>";                   
                     } else {
-                        $contador++;
                         echo "<br> Tu número " . $num . " es menor.<br>Vuelve a intentarlo.<br>";
                         echo "<br> Intentos: " . $contador . "<br>";
                     }
