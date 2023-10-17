@@ -89,17 +89,45 @@
 
         //validar email: debe tener @ y .com
         function validarEmail($email){
-            if (substr_count($email, "@") ==0 && substr_count($email, ".com")==0){
+            if (substr_count($email, "@")==0 || substr_count($email, ".com")==0){
                 return "Pon un email válido.";
             } else {
                 return "";
             }
         }
 
+        $nombre = si_existe("nombre","");
+        $edad = si_existe("edad",0);
+        $email = si_existe("email","");
+        
+        $errores = array();
+        $erroes[] = validarNombre($nombre);
+        $errores[] = validarEdad($edad);
+        $errores[] = validarEmail($email);
+        // elimina las cadenas vacías
+        $errores = array_filter($errores);
 
+        $resultado;
+        
+        if ($_SERVER["REQUEST_METHOD"] == "POST"){
+            if(!empty($errores)){
+                echo "<br>Se han detectado estos errores:";
+                foreach($errores as $error){
+                    echo "<br> $error <br>";
+                }
+            }else{
+                echo "Has enviado los siguientes datos: <br>
+                Nombre: $nombre<br>
+                Edad: $edad<br>
+                Email: $email<br>
+                
+                ";
+            }
+        }
 
     ?>
 
     </form>
 </body>
 </html>
+<br<
