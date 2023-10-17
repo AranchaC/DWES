@@ -113,10 +113,10 @@
             if(!empty($errores)){
                 echo "<br>Se han detectado estos errores:";
                 foreach($errores as $error){
-                    echo "<br> $error <br>";
+                    echo "<br> $error";
                 }
             }else{
-                echo "Has enviado los siguientes datos: <br>
+                echo "<br>Has enviado los siguientes datos: <br>
                 Nombre: $nombre<br>
                 Edad: $edad<br>
                 Email: $email<br>
