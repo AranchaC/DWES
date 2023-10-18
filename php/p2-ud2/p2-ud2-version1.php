@@ -4,20 +4,51 @@
     <title>Ejemplo de Formulario</title>
 </head>
 <body>
+
+<?php
+    echo "Datos servidor: <br>";
+    echo "Nombre Servidor: " . $_SERVER['SERVER_NAME'] . "<br>";
+    echo "IP remota: " . $_SERVER['REMOTE_ADDR'] . "<br>";
+    echo "Protocolo: " . $_SERVER['SERVER_PROTOCOL'] . "<br>";
+    echo "Servidor / Software: " . $_SERVER['SERVER_SOFTWARE'] . "<br>";
+
+    echo "<br>Datos cabecera: <br>";
+    echo "<table border='1'>";
+    echo "<TR>";
+    echo "<TH>CABECERAS:</TH>";
+    echo "<TD>";
+
+    echo "</TD></TR>\n";
+    $cabecera=apache_request_headers();
+    foreach($cabecera as $campo => $contenido){
+        if (substr_count($campo, "User-") != 0){
+            echo "<TR><TD>$campo</TD><TD>$contenido</TD></TR>";
+        }
+        if (substr_count($campo,"Accept") != 0){
+            echo "<TR><TD>$campo</TD><TD>$contenido</TD></TR>";
+        }
+        
+    }
+    echo "</table>"
+
+    // función apache_request_headers
+?>
     <h2>Formulario </h2>
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
         <!-- max 10 caracteres -->
         <!-- obligatorio -->
+        <!-- campo oculto para almacenar error -->
+        <p><?php echo isset($_POST['nombre']) ? $_POST['nombre'] : '';?> </p>
         <label for="nombre">Nombre:  </label>
-        <input type="text" name="nombre">
+        <input type="text" name="nombre" value="<?php echo isset($_POST['nombre']) ? $_POST['nombre'] : '';?> ">
         <br><br>
         <!-- min 18 y max 70 -->
         <label for="edad">Edad: </label>
-        <input type="number" name="edad">
+        <input type="text" name="edad" value="<?php echo isset($_POST['edad']) ? $_POST['edad'] : '';?> ">
         </br></br>
         <!-- obligatorio tener @ y .com -->
         <label for="email">Email: </label>
-        <input type="text" name="email">
+        <input type="text" name="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : '';?> ">
         </br></br>
 
         <!-- coliflor campo prohibido -->
@@ -69,10 +100,10 @@
 
         //validar nombre: obligatorio y min 10.
         function validarNombre($nombre){
-            if (empty($nombre)){
-                return "<br> Es obligatorio <br>";
+            if ($nombre === ""){
+                return "Nombre: Es obligatorio";
             }elseif (strlen($nombre) > 10){
-                return "<br> Tienen que tener menos de 10 carácteres.<br>";
+                return "Nombre: Tienen que tener menos de 10 carácteres.";
             }else{
                 return "";
             }
@@ -80,8 +111,10 @@
 
         //validar edad: entre 18 y 70
         function validarEdad($edad){
-            if ($edad < 18 || $edad > 70){
-                return "La edad deber estar entre 18 y 70.";
+            if (!is_numeric($edad)){
+                return "Edad: Pon un número";
+            } elseif ($edad < 18 || $edad > 70){
+                return "Edad: La edad deber estar entre 18 y 70.";
             } else{
                 return "";
             }
@@ -90,7 +123,7 @@
         //validar email: debe tener @ y .com
         function validarEmail($email){
             if (substr_count($email, "@")==0 || substr_count($email, ".com")==0){
-                return "Pon un email válido.";
+                return "Eamil: Pon un email válido.";
             } else {
                 return "";
             }
@@ -101,7 +134,7 @@
         $email = si_existe("email","");
         
         $errores = array();
-        $erroes[] = validarNombre($nombre);
+        $errores[] = validarNombre($nombre);
         $errores[] = validarEdad($edad);
         $errores[] = validarEmail($email);
         // elimina las cadenas vacías
@@ -130,4 +163,3 @@
     </form>
 </body>
 </html>
-<br<
