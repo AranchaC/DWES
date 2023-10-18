@@ -6,30 +6,26 @@
 <body>
 
 <?php
-    echo "Datos servidor: <br>";
-    echo "Nombre Servidor: " . $_SERVER['SERVER_NAME'] . "<br>";
-    echo "IP remota: " . $_SERVER['REMOTE_ADDR'] . "<br>";
-    echo "Protocolo: " . $_SERVER['SERVER_PROTOCOL'] . "<br>";
-    echo "Servidor / Software: " . $_SERVER['SERVER_SOFTWARE'] . "<br>";
-
-    echo "<br>Datos cabecera: <br>";
-    echo "<table border='1'>";
-    echo "<TR>";
-    echo "<TH>CABECERAS:</TH>";
-    echo "<TD>";
-
-    echo "</TD></TR>\n";
-    $cabecera=apache_request_headers();
-    foreach($cabecera as $campo => $contenido){
-        if (substr_count($campo, "User-") != 0){
+ echo "<table border='1'>";
+    echo "<tr><th>Datos servidor: </th></tr>";
+    echo "<tr><td>Nombre Servidor: </td><td>" . $_SERVER['SERVER_NAME'] . "</td></tr>";
+    echo "<tr><td>IP remota: </td><td>" . $_SERVER['REMOTE_ADDR'] . "</td></tr>";
+    echo "<tr><td>Protocolo: </td><td>" . $_SERVER['SERVER_PROTOCOL'] . "</td></tr>";
+    echo "<tr><td>Servidor / Software: </td><td>" . $_SERVER['SERVER_SOFTWARE'] . "</td></tr>";
+echo "</table>";
+    echo "<br>";
+echo "<table border='1'>";
+    echo "<TR><TH>Cabeceras: </TH></TR>";
+    $cabecera = apache_request_headers();
+    foreach ($cabecera as $campo => $contenido) {
+        if (substr_count($campo, "User-") != 0) {
             echo "<TR><TD>$campo</TD><TD>$contenido</TD></TR>";
-        }
-        if (substr_count($campo,"Accept") != 0){
+        }//if
+        if (substr_count($campo, "Accept") != 0) {
             echo "<TR><TD>$campo</TD><TD>$contenido</TD></TR>";
-        }
-        
-    }
-    echo "</table>"
+        }//if
+    }//foreach
+echo "</table>";
 
     // función apache_request_headers
 ?>
@@ -100,7 +96,8 @@
 
         //validar nombre: obligatorio y min 10.
         function validarNombre($nombre){
-            if ($nombre === ""){
+            $nombre = trim($nombre);
+            if (empty($nombre)){
                 return "Nombre: Es obligatorio";
             }elseif (strlen($nombre) > 10){
                 return "Nombre: Tienen que tener menos de 10 carácteres.";
