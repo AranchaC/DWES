@@ -12,6 +12,7 @@
     <?php
     echo "<table border='1'>";
         echo "<tr><th>Datos servidor: </th></tr>";
+        // Mostrar datos del servidor:
         echo "<tr><td>Nombre Servidor: </td><td>" . $_SERVER['SERVER_NAME'] . "</td></tr>";
         echo "<tr><td>IP remota: </td><td>" . $_SERVER['REMOTE_ADDR'] . "</td></tr>";
         echo "<tr><td>Protocolo: </td><td>" . $_SERVER['SERVER_PROTOCOL'] . "</td></tr>";
@@ -20,6 +21,7 @@
         echo "<br>";
     echo "<table border='1'>";
         echo "<TR><TH>Cabeceras: </TH></TR>";
+        // Mostrar cabeceras que contienen "User-" o "Accept"
         $cabecera = apache_request_headers();
         foreach ($cabecera as $campo => $contenido) {
             if (substr_count($campo, "User-") != 0) {
@@ -33,15 +35,21 @@
 
     $enviado = false;
     $confirmado = false;
+
+    // Comprobar si se envió el formulario
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $enviado = true;}
+
+    // Comprobar si se ha confirmado
     if (isset($_REQUEST['confirmar'])){
         $confirmado = true;}
 
+    // Función para obtener un valor de $_REQUEST con un valor por defecto si no existe.
     function si_existe($clave, $valor_defecto) {
         return isset($_REQUEST[$clave]) ? $_REQUEST[$clave] : $valor_defecto;
     }
 
+    // Obtener los valores de los campos del formulario.
     $nombre = si_existe("nombre", "");
     $edad = si_existe("edad", 0);
     $email = si_existe("email", "");
@@ -51,7 +59,7 @@
     ?>
 
     <h2>Formulario </h2>
-    <!-- Si no se ha dado a confirmar, se muestra el formulario: -->
+    <!-- Si se ha dado a confirmar, se muestran los datos del formulario: -->
     <?php if($confirmado){ ?>
         <h3>Datos Confirmados:</h3>
             <p>Nombre: <?php echo $nombre; ?></p>
@@ -62,6 +70,8 @@
             <p>Ciudades: <?php echo implode(', ',$ciudades); ?></p>
             <a href="p2-ud2-version2.php">[Volver]</a>;
     <?php } 
+
+    // Y si no se ha dado a confirmar, se muestra el formulario:
     if (!$confirmado){ ?>
         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
             <!-- max 10 caracteres -->
@@ -191,6 +201,7 @@
             }
         }
 
+        // Crear un array de errores y eliminar cadenas vacías:
         $errores = array();
         $errores[] = validarNombre($nombre);
         $errores[] = validarEdad($edad);
@@ -201,6 +212,7 @@
         // elimina las cadenas vacías
         $errores = array_filter($errores);
 
+        // Mostrar los datos si la validación fue exitosa, es decir si no hay errores:
         if ($_SERVER["REQUEST_METHOD"] == "POST"){
             if(empty($errores)){
                 echo "<br><br>Has enviado los siguientes datos: <br>
