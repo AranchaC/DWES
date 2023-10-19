@@ -3,13 +3,14 @@
 
 <head>
     <title>Ejemplo de Formulario</title>
-    <!-- línea de estilo color rojo -->
+    <!-- línea de estilo color rojo, que luego aplico con span en el lugar correspondiente -->
     <style> .error{color: red;} </style>
 </head>
 
 <body>
 
     <?php
+    //creo tabla para poner los datos de servidor, uno por cada fila:
     echo "<table border='1'>";
         echo "<tr><th>Datos servidor: </th></tr>";
         // Mostrar datos del servidor:
@@ -19,6 +20,7 @@
         echo "<tr><td>Servidor / Software: </td><td>" . $_SERVER['SERVER_SOFTWARE'] . "</td></tr>";
     echo "</table>";
         echo "<br>";
+    // creo tabla para poner las cabeceras:
     echo "<table border='1'>";
         echo "<TR><TH>Cabeceras: </TH></TR>";
         // Mostrar cabeceras que contienen "User-" o "Accept"
@@ -33,23 +35,25 @@
         }//foreach
     echo "</table>";
 
+    //creo variables que usaré si se ha dado al botón de enviar o confirmar:
     $enviado = false;
     $confirmado = false;
 
-    // Comprobar si se envió el formulario
+    // Comprobar si se envió el formulario y creo variable.
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $enviado = true;}
 
-    // Comprobar si se ha confirmado
+    // Comprobar si se ha confirmado y creo variable.
     if (isset($_REQUEST['confirmar'])){
         $confirmado = true;}
 
-    // Función para obtener un valor de $_REQUEST con un valor por defecto si no existe.
+    // Función para obtener un valor de una variable, con un valor por defecto si no existe.
     function si_existe($clave, $valor_defecto) {
+        //si recibe dato, se asigna ese dato y si no el valor por defecto.
         return isset($_REQUEST[$clave]) ? $_REQUEST[$clave] : $valor_defecto;
     }
 
-    // Obtener los valores de los campos del formulario.
+    //Creo variables con los valores obtenidos de los campos del formulario (llamando a la función).
     $nombre = si_existe("nombre", "");
     $edad = si_existe("edad", 0);
     $email = si_existe("email", "");
@@ -68,30 +72,32 @@
             <p>Comida: <?php echo $comida; ?></p>
             <p>Hobbies: <?php echo implode(', ',$hobbies); ?></p>
             <p>Ciudades: <?php echo implode(', ',$ciudades); ?></p>
-            <a href="p2-ud2-version2.php">[Volver]</a>;
+            <a href="p2-ud2-version2.php">[Volver]</a>
     <?php } 
 
     // Y si no se ha dado a confirmar, se muestra el formulario:
     if (!$confirmado){ ?>
+    <!-- Creo formulario con action al propio formulario -->
         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
-            <!-- max 10 caracteres -->
-            <!-- obligatorio -->
+            <!-- Antes de cada campo, aplico estilo error si el formulario se ha enviado y hay mensajes de error. -->
+
+            <!-- Creo tres campos de tipo texto -->
+            <!-- como valor, aplico lógica de si recibe datos, tenga ese dato y si no campo vacío, para que recuerden los datos. -->
             <?php if ($enviado){ echo "<span class='error'>" . validarNombre($nombre) . "</span><br>"; } ?>
             <label for="nombre">Nombre: </label>
             <input type="text" name="nombre" value="<?php echo isset($_POST['nombre']) ? $_POST['nombre'] : ''; ?> ">
             <br><br>
-            <!-- min 18 y max 70 -->
             <?php if ($enviado){ echo "<span class='error'>" . validarEdad($edad) . "</span><br>"; } ?>
             <label for="edad">Edad: </label>
             <input type="text" name="edad" value="<?php echo isset($_POST['edad']) ? $_POST['edad'] : ''; ?> ">
             </br></br>
-            <!-- obligatorio tener @ y .com -->
             <?php if ($enviado){ echo "<span class='error'>" . validarEmail($email) . "</span><br>"; } ?>
             <label for="email">Email: </label>
             <input type="text" name="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?> ">
             </br></br>
 
-            <!-- coliflor campo prohibido -->
+            <!-- Creo 4 input de tipo radio, solo se selecciona 1 opción -->
+            <!-- en cada uno, si recibe dato y si su dato corresponde con su value, el campo será checked. -->
             <?php if ($enviado){ echo "<span class='error'>" . validarComida($comida) . "</span><br>"; } ?>
             <label>¿Qué prefieres?:</label>
             <input type="radio" name="comida" value="pizza" <?php if (isset($_POST['comida']) && $_POST['comida'] == 'pizza') echo 'checked'; ?>>
@@ -104,7 +110,8 @@
             <label for="coliflor">Coliflor</label>
             </br></br>
 
-            <!-- min 2 -->
+            <!-- creo 5 campos checkbox, que serán array y multiselección -->
+            <!-- en cada uno, si en el array está su value, entonces será checked (para recordar el dato) -->
             <?php if ($enviado){ echo "<span class='error'>" . validarHobbies($hobbies) . "</span><br>"; } ?>
             <label>Hobbies:</label>
                 <input type="checkbox" name="hobbies[]" value="Deportes" <?php if (in_array('Deportes', $hobbies)) echo 'checked'; ?>>
@@ -120,7 +127,8 @@
             </br></br>
 
 
-            <!-- atenasV y atenasI : opciones incompatibles. -->
+            <!-- creo campos select con 5 opctions, serán multiseleccion y tipo array -->
+            <!-- en cada uno, si en el array está su value, entonces será selected (para recordar el dato) -->
             <?php if ($enviado){ echo "<span class='error'>" . validarCiudades($ciudades) . "</span><br>"; } ?>
             <label for="ciudades">Ciudades que has visitado:</label>
             <select name="ciudades[]" multiple>
@@ -128,19 +136,20 @@
                 <option value="Boston" <?php if (in_array('Boston', $ciudades)) echo 'selected'; ?>>Boston</option>
                 <option value="Londres" <?php if (in_array('Londres', $ciudades)) echo 'selected'; ?>>Londres</option>
                 <option value="Roma" <?php if (in_array('Roma', $ciudades)) echo 'selected'; ?>>Roma</option>
-                <option value="AtenasV" <?php if (in_array('AtenaV', $ciudades)) echo 'selected'; ?>>Atenas en Verano</option>
+                <option value="AtenasV" <?php if (in_array('AtenasV', $ciudades)) echo 'selected'; ?>>Atenas en Verano</option>
                 <option value="AtenasI" <?php if (in_array('AtenasI', $ciudades)) echo 'selected'; ?>>Atenas en Invierno</option>
             </select>
             </br></br>
 
+            <!-- y creo boton sumbit de enviar y otro de reset para borrar datos. -->
             <input type="submit" value="Enviar">
             <input type="reset" value="Borrar Formulario">
-            <input type="submit" name="confirmar" value="Confirmar">
-        </form>
-
+          
         
     <?php }
-        //validar nombre: obligatorio y min 10.
+    //creo funciones de validación con restricciones para cada campo del formulario:
+
+        //validar nombre: obligatorio, min 3 caracteres y max 10 caracteres..
         function validarNombre($nombre){
             $nombre = trim($nombre);
             if (empty($nombre)){
@@ -152,7 +161,7 @@
             }
         }
 
-        //validar edad: entre 18 y 70
+        //validar edad: campo numérico y entre 18 y 70.
         function validarEdad($edad){
             $edad = trim($edad);
             if (!is_numeric($edad)) {
@@ -164,7 +173,7 @@
             }
         }
 
-        //validar email: debe tener @ y .com
+        //validar email: debe tener @ y .com.
         function validarEmail($email){
             $email = trim($email);
             if (substr_count($email, "@") == 0 || substr_count($email, ".com") == 0) {
@@ -174,7 +183,7 @@
             }
         }
 
-        //validar comida: coliflor campo prohibido
+        //validar comida: coliflor campo prohibido.
         function validarComida($comida){
             if (substr_count($comida, "coliflor") != 0){
                 return "No puedes seleccionar coliflor.";
@@ -183,7 +192,7 @@
             }
         }
 
-        //validar hobbies: mínimo 2
+        //validar hobbies: mínimo 2.
         function validarHobbies($hobbies){
             if (count($hobbies) <2){
                 return "Selecciona al menos 2.";
@@ -213,21 +222,19 @@
         $errores = array_filter($errores);
 
         // Mostrar los datos si la validación fue exitosa, es decir si no hay errores:
-        if ($_SERVER["REQUEST_METHOD"] == "POST"){
-            if(empty($errores)){
-                echo "<br><br>Has enviado los siguientes datos: <br>
-                Nombre: $nombre<br>
-                Edad: $edad<br>
-                Email: $email<br>
-                Comida: $comida<br>
-                Hobbies: " . implode(', ', $hobbies) . "<br>
-                Ciudades: " . implode(', ', $ciudades) . "<br>
-                ";
-            }
-        }
-
+        if ($enviado = true && (empty($errores))){
+            echo "<br><h3>Has enviado los siguientes datos: </h3>
+            Nombre: $nombre<br>
+            Edad: $edad<br>
+            Email: $email<br>
+            Comida: $comida<br>
+            Hobbies: " . implode(', ', $hobbies) . "<br>
+            Ciudades: " . implode(', ', $ciudades) . "<br><br><br>";    
+        }//if
 
         ?>
+        <input type="submit" name="confirmar" value="Confirmar" <?php echo ($_SERVER["REQUEST_METHOD"] == "POST" && (empty($errores))) ? '' : 'disabled'; ?>>
+    </form>
 
 </body>
 
