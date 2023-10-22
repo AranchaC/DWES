@@ -63,7 +63,8 @@
     ?>
 
     <h2>Formulario </h2>
-    <!-- Si se ha dado a confirmar, se muestran los datos del formulario y un link para volver al propio formulario. -->
+    <!-- Si se ha dado a confirmar, se muestran los datos del formulario 
+    y un link para volver al propio formulario. -->
     <?php if($confirmado){ ?>
         <h3>Datos Confirmados:</h3>
             <p>Nombre: <?php echo $nombre; ?></p>
@@ -79,10 +80,12 @@
     if (!$confirmado){ ?>
     <!-- Creo formulario con action al propio formulario -->
         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
-            <!-- Antes de cada campo, aplico estilo error con etiqueta span si el formulario se ha enviado y hay mensajes de error. -->
+            <!-- Antes de cada campo, aplico estilo error con etiqueta span si el formulario se ha enviado 
+            y hay mensajes de error. -->
 
             <!-- Creo tres campos de tipo texto -->
-            <!-- como valor, aplico lógica de si recibe datos, tenga ese dato y si no campo vacío, para que recuerden los datos. -->
+            <!-- como valor, aplico lógica de si recibe datos, tenga ese dato y si no campo vacío, 
+            para que recuerden los datos. -->
             <?php if ($enviado){ echo "<span class='error'>" . validarNombre($nombre) . "</span><br>"; } ?>
             <label for="nombre">Nombre: </label> 
             <input type="text" name="nombre" value="<?php echo isset($_POST['nombre']) ? $_POST['nombre'] : '' ; ?> ">
