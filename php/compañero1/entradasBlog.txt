@@ -1,1 +1,0 @@
-Dia 1 Sufriendo con PHP<br>Día 2 Voy pillando algo<br>Día 3 usando mis primeras funciones<br>Día 3 usando mis primeras funciones<br>
