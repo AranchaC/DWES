@@ -1,0 +1,9 @@
+$_cookies
+setcookie
+$_session
+session
+session_start()
+session_destroy()
+
+
+
