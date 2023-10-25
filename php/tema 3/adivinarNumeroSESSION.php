@@ -18,7 +18,7 @@
                 $contador = isset($_SESSION["contador"]) ? $_SESSION["contador"] : 0;
 
                 // Si se ha enviado el formulario con el botón "Adivinar", iniciamos juego.
-                // si es la primera vez que se inicia:
+                // si es la primera vez que se inicia:.
                 if (isset($_REQUEST["adivinar"])){
                     //Creo variable num y asigno valor ingresado por el campo num:
                     $num = $_REQUEST["num"];
