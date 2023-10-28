@@ -14,8 +14,16 @@ if (isset($_POST["actualizar"])) {
     foreach ($productos as $nombre => $precio) {
         $uds_add = isset($_POST[$nombre . "_add"]) ? intval($_POST[$nombre . "_add"]) : 0;
         $uds_remove = isset($_POST[$nombre . "_remove"]) ? intval($_POST[$nombre . "_remove"]) : 0;
-        $totalUds += $uds_add - $uds_remove;
-        $totalPrecio += ($uds_add - $uds_remove) * $precio;
+
+        if ($_POST[$nombre . "_add"]){
+            $totalUds = intval($totalUds + $uds_add);
+        } elseif($_POST[$nombre . "_remove"]){
+            $totalUds = intval($totalUds - $uds_remove);
+        }
+
+        // $totalUds += $uds_add - $uds_remove;
+
+        $totalPrecio += $totalUds * $precio;
         $_SESSION['productos'][$nombre] = $uds_add - $uds_remove;
     }
     $_SESSION['totalUds'] = $totalUds;
@@ -53,10 +61,10 @@ if (isset($_POST["actualizar"])) {
                             <input type="number" name="<?php echo $producto . "_remove" ?>" max="0" value=0 />
                         </td>
                         <td>
-                            <?php echo isset($_SESSION['productos'][$producto]) ? $_SESSION['productos'][$producto] : 0; ?>
+                            <?php echo  $_SESSION['productos'][$producto] ; ?>
                         </td>
                         <td>
-                            <?php echo (isset($_SESSION['productos'][$producto]) ? $_SESSION['productos'][$producto] : 0) * $precio; ?>
+                            <?php echo $_SESSION['productos'][$producto]* $precio; ?>
                         </td>
                     </tr>
                 <?php
