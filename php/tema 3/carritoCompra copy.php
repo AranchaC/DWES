@@ -3,6 +3,15 @@ session_start();
 
 $productos = array("peras" => 3, "limones" => 6, "manzanas" => 4);
 
+//inicializo cantidad de productos en la sesión.
+//para realizar un seguimiento de la cantidad de uds por producto y que se 
+//vayan acumulando en vez de sobreescribirlas.
+if (!isset($_SESSION['productos'])) {
+    $_SESSION['productos'] = array();
+    foreach ($productos as $producto => $precio) {
+        $_SESSION['productos'][$producto] = 0;
+    }
+}
 //variables:
 //uds_add para añadir
 //uds_remove para quitar
@@ -15,17 +24,15 @@ if (isset($_POST["actualizar"])) {
         $uds_add = intval($_POST[$nombre . "_add"]);
         $uds_remove = intval($_POST[$nombre . "_remove"]);
 
-        if ($_POST[$nombre . "_add"]){
-            $totalUds = intval($totalUds + $uds_add);
-        } elseif($_POST[$nombre . "_remove"]){
-            $totalUds = intval($totalUds - $uds_remove);
-        }
+        //actualizo la cantidad de uds para cada producto:
+        $_SESSION['productos'][$nombre] += $uds_add - $uds_remove;
 
-        // $totalUds += $uds_add - $uds_remove;
+        //calculo la cantidad total de uds en el carrito:
+        $totalUds += $_SESSION['productos'][$nombre];
 
-        $totalPrecio += $totalUds * $precio;
-        $_SESSION['productos'][$nombre] = $uds_add - $uds_remove;
+        $totalPrecio += ($uds_add - $uds_remove) * $precio;
     }
+    //almaceno el total uds en la sesión:
     $_SESSION['totalUds'] = $totalUds;
     $_SESSION['totalPrecio'] = $totalPrecio;
 }
@@ -75,7 +82,7 @@ if (isset($_POST["actualizar"])) {
             <br>
         
             <p>Total de unidades en el carrito: <?php echo isset($_SESSION['totalUds']) ? $_SESSION['totalUds'] : 0; ?></p>
-            <p>Precio total a pagar: <?php echo $_SESSION['totalPrecio']; ?> €</p>
+            <p>Precio total a pagar: <?php echo isset($totalPrecio) ? $totalPrecio : 0; ?> €</p>
 
             <input type="submit" name="actualizar" value="Actualizar carrito">
             <input type="submit" name="terminar" value="Terminar compra">
