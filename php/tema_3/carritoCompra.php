@@ -52,6 +52,21 @@ if(isset($_POST["borrar"])){
     }
 }
 
+if (isset($_POST["terminar"])){
+    $restarStock = 0;
+    $_SESSION['totalUds'] = 0;
+    $_SESSION['totalPrecio'] = 0;
+    foreach ($productos as $nombre => $precio) {
+        $restarStock = $_SESSION['productos'][$nombre];
+        $_SESSION['productos'][$nombre] = 0;
+    }
+    foreach ($stock as $producto => $cantidad) {
+        $stock[$producto] -= $restarStock;
+    }
+
+
+}
+
 ?>
 
 <html>
