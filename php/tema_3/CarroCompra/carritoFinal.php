@@ -18,9 +18,16 @@ include('stock.php');
             echo "<ul>";
             foreach ($productos as $nombre => $precio) {
                 // solo se mostrarán los productos con más de 0 uds.
-                if ($_SESSION[$nombre] > 0){
-                    
+                if ($_SESSION[$nombre] > 0){                    
                     echo "<li>$nombre: $_SESSION[$nombre] uds.</li>";
+
+                        //actualizo el stock, restando las uds de los campos que no estén a 0:
+                        if ($_SESSION[$nombre] > 0) {
+                            $stock[$nombre] -= $_SESSION[$nombre];
+                        }//if
+                    
+                    // Actualizar el archivo de stock
+                    file_put_contents(RUTA_ARCHIVO, serialize($stock));
                 }  
                 // Restablecer las cantidades a cero en la sesión:
                 $_SESSION[$nombre] = 0;
@@ -34,7 +41,7 @@ include('stock.php');
                 foreach ($productos as $producto => $precio){
                     if (isset($stock[$producto])){
                         $cantidad = $stock[$producto];
-                        echo "<li>$producto - $precio € /ud - $cantidad uds.</li>"; 
+                        echo "<li>$producto ($precio € /ud): $cantidad uds.</li>"; 
                     }
                     
                 }
