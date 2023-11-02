@@ -4,6 +4,7 @@ session_start();
 include('carrito.php');
 $mensaje = "";
 $terminar = false;
+$actualizado = false;
 
 //inicializo cantidad de productos en la sesión.
 //para realizar un seguimiento de la cantidad de uds por producto y que se 
@@ -13,7 +14,8 @@ foreach ($productos as $nombre => $precio) {
         //creamos una memoria por cada producto y asignamos valor inicial 0:
         $_SESSION[$nombre] = 0;
     }
- }
+}
+
 //variables:
 //uds_add para añadir: input con nº positivos.
 //uds_remove para quitar: input con nº negativos.
@@ -22,6 +24,7 @@ if (isset($_POST["actualizar"])) {
     //variables para usar como total del carrito:
     $totalUds = 0;
     $totalPrecio = 0;
+
 
     foreach ($productos as $nombre => $precio) {
         //Se combina con "_add o _remove" para crear la clave del input 
@@ -42,13 +45,16 @@ if (isset($_POST["actualizar"])) {
             //calculo el precio total del carrito,
             //multiplicando el precio por las uds de cada producto
             $totalPrecio += $_SESSION[$nombre] * $precio;
+            $actualizado = true;
         }else{
             $mensaje = "<b><font color=\"red\">No puede haber unidades negativas.</font></b><br> <hr>";
         }
+        
+        //almaceno el total del carrito (uds y precio) en la sesió:
+        $_SESSION['totalUds'] = $totalUds;
+        $_SESSION['totalPrecio'] = $totalPrecio;
     }
-    //almaceno el total del carrito (uds y precio) en la sesió:
-    $_SESSION['totalUds'] = $totalUds;
-    $_SESSION['totalPrecio'] = $totalPrecio;
+
 }//actualizar
 
 if(isset($_POST["borrar"])){
@@ -62,11 +68,11 @@ if(isset($_POST["borrar"])){
 if (isset($_POST["terminar"])){
     //solo se puede terminar la compra si en el carrito hay más de 0 uds.
     if ($_SESSION['totalUds'] != 0){
-        $terminar = true;
-        
+   
         $restarStock = 0;
         $_SESSION['totalUds'] = 0;
         $_SESSION['totalPrecio'] = 0;
+
         foreach ($productos as $nombre => $precio) {
             $restarStock = $_SESSION[$nombre];
             $_SESSION[$nombre] = 0;
@@ -91,19 +97,6 @@ if (isset($_POST["terminar"])){
     <body>
         <h1>FRUTERÍA CHICHARRO</h1>
         <h2>CARRO DE LA COMPRA</h2>
-        <?php 
-        if ($terminar){ //si se ha terminado la compra, mostramos el resultado y volvemos a empezar.
-            echo "<h3>Resumen de la compra:</h3>";
-            foreach ($productos as $nombre => $precio) {
-                // solo se mostrarán los productos con más de 0 uds.
-                if ($_SESSION[$nombre] > 0){
-                    echo "$nombre - $_SESSION[$nombre] uds.<br />";
-                }
-            }  ?>
-            <p>Total de unidades en el carrito: <?php echo isset($_SESSION['totalUds']) ? $_SESSION['totalUds'] : 0; ?></p>
-            <p>Precio total a pagar: <?php echo isset($_SESSION['totalPrecio']) ? $_SESSION['totalPrecio'] : 0; ?> €</p>
-            <?php
-        }else { ?>
 
         <form action="" method="POST">
             <table border="1">
@@ -146,10 +139,12 @@ if (isset($_POST["terminar"])){
 
             <input type="submit" name="actualizar" value="Actualizar carrito">
             <input type="submit" name="borrar" value="Borrar carrito">
-            <input type="submit" name="terminar" value="Terminar compra">
         </form>
-        <?php
-        }
-        ?>
+        <form action="carritoFinal.php" method="POST">
+            <input type="submit" name="terminar" value="Terminar compra" 
+                <?php echo (!$actualizado || !empty($mensaje) || $_SESSION['totalUds'] <= 0) ? 'disabled' : ''; ?>>
+        </form>
+
+
     </body>
 </html>
