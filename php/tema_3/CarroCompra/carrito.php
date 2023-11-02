@@ -23,6 +23,6 @@ if (!file_exists(RUTA_ARCHIVO) || !($stock = unserialize(file_get_contents(RUTA_
     );
     file_put_contents(RUTA_ARCHIVO,serialize($stock));
 }
-
+///
 // Ahora, $stock contiene el stock actualizado, incluso si el archivo no existía
 ?>
