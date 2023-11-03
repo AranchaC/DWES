@@ -1,1 +1,1 @@
-a:5:{s:5:"peras";i:6;s:7:"limones";i:14;s:8:"manzanas";i:11;s:8:"naranjas";i:25;s:9:"paraguaya";i:46;}
+a:5:{s:5:"peras";i:10;s:7:"limones";i:20;s:8:"manzanas";i:12;s:8:"naranjas";i:30;s:9:"paraguaya";i:50;}

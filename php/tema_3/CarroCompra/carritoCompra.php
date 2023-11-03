@@ -47,7 +47,7 @@ if (isset($_POST["actualizar"])) {
             $actualizado = true;
             
         }else{
-            $mensaje = "<b><font color=\"red\">No puede haber unidades negativas.</font></b><br> <hr>";
+            $mensaje = "<hr><b><font color=\"red\">No puede haber unidades negativas.</font></b><br> <hr>";
         }//else
         
         //almaceno el total del carrito (uds y precio) en la sesión:
@@ -114,9 +114,11 @@ file_put_contents(RUTA_ARCHIVO, serialize($stock));
             <br>
         
             <p>Total de unidades en el carrito: <?php echo isset($_SESSION['totalUds']) ? $_SESSION['totalUds'] : 0; ?></p>
+            <hr>
             <p><b>Precio total a pagar: <?php echo isset($_SESSION['totalPrecio']) ? $_SESSION['totalPrecio'] : 0; ?> €</b></p>
+            <hr>
 
-            <?php echo "<h2>Stock disponible (precios y uds): </h2><ol>";
+            <?php echo "<h3>Stock disponible (precios y uds): </h3><ol>";
                     foreach ($productos as $producto => $precio){
                         if (isset($stock[$producto])){
                             $cantidad = $stock[$producto];

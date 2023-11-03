@@ -2,7 +2,7 @@
 
 include('stock.php');
 
-echo "<h2>Stock disponible (precios y uds): </h2><ol>";
+echo "<h3>Stock disponible (precios y uds): </h3><ol>";
 foreach ($productos as $producto => $precio){
     if (isset($stock[$producto])){
         $cantidad = $stock[$producto];

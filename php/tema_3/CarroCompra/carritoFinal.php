@@ -34,16 +34,17 @@ include('stock.php');
             };?>
             </ul>
             <p>Total de unidades en el carrito: <?php echo isset($_SESSION['totalUds']) ? $_SESSION['totalUds'] : 0; ?></p>
+            <hr>
             <p><b>Precio total a pagar: <?php echo isset($_SESSION['totalPrecio']) ? $_SESSION['totalPrecio'] : 0; ?> €</b></p>
+            <hr>
             <?php   
             
-            echo "<h2>Stock disponible (precios y uds): </h2><ol>";
+            echo "<h3>Stock disponible (precios y uds): </h3><ol>";
                 foreach ($productos as $producto => $precio){
                     if (isset($stock[$producto])){
                         $cantidad = $stock[$producto];
                         echo "<li>$producto ($precio € /ud): $cantidad uds.</li>"; 
-                    }
-                    
+                    }                   
                 }
                 echo "</ol>";
 
