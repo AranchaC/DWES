@@ -2,17 +2,14 @@
 
 include('stock.php');
 
+//Muestro el stock disponible en una lista, el cual se va actualizando según las compras.
+//aquí se muestra el nombre del producto con su precio por ud, y las unidades disponibles.
 echo "<h3>Stock disponible (precios y uds): </h3><ol>";
-foreach ($productos as $producto => $precio){
-    if (isset($stock[$producto])){
-        $cantidad = $stock[$producto];
-        echo "<li>$producto ($precio € /ud): $cantidad uds.</li>"; 
-    }
-      
+foreach ($stock as $nombre => $unidades){
+    //el precio lo cogemos del array productos.
+    $precio = $productos[$nombre];
+    echo "<li>$nombre ($precio € /ud): $unidades uds.</li>";       
 }
 echo "</ol>";
-
-//muestra stock
-
 
 ?>

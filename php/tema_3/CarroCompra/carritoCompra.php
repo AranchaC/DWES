@@ -1,14 +1,16 @@
 <?php
+//inicio sesión para poder almacenar datos:
 session_start();
 
 include('stock.php');
+
+//creo e inicializo variables que usaré luego:
 $mensaje = "";
-$terminar = false;
 $actualizado = false;
 
-//inicializo cantidad de productos en la sesión.
-//para realizar un seguimiento de la cantidad de uds por producto y que se 
-//vayan acumulando en vez de sobreescribirlas.
+//inicializo cantidad de productos en la sesión (recorriendo el array productos)
+//para realizar un seguimiento de la cantidad de uds por producto y  
+//que se vayan acumulando en vez de sobreescribirlas.
 foreach ($productos as $nombre => $precio) {
     if (!isset($_SESSION[$nombre] )) {
         //creamos una memoria por cada producto y asignamos valor inicial 0:
@@ -16,26 +18,26 @@ foreach ($productos as $nombre => $precio) {
     }
 }
 
-//variables:
-//uds_add para añadir: input con nº positivos.
-//uds_remove para quitar: input con nº negativos.
-
+//Aplicamos las acciones que queremos para el botón Actualizar:
 if (isset($_POST["actualizar"])) {
-    //variables para usar como total del carrito:
+    //variables para usar como los totales del carrito:
     $totalUds = 0;
     $totalPrecio = 0;
 
+    //recorremos array productos para aplicar cada acción a cada producto:
     foreach ($productos as $nombre => $precio) {
-        //Se combina con "_add o _remove" para crear la clave del input 
-        //del formulario por producto.
-        //los campos inputs se llaman así: nombre_add o nombre_remove
+        //Creo variables:
+            //uds_add para añadir (nº positivos) y uds_remove para quitar (nº negativos).
+        //Y les asigno los valores recibidos por cada input de cada producto:
+            //Se combina con "_add o _remove" porque los inputs se llaman nombre_add o nombre_remove.
         $uds_add = intval($_POST[$nombre . "_add"]);
         $uds_remove = intval($_POST[$nombre . "_remove"]);
 
-        //actualizo la cantidad de uds para cada producto:
+        //actualizo la cantidad de uds para cada producto, sumándoles los valores ingresados por el usuario.
+        //comos las uds_remove son nums negativos, también se suman para así restarlos:
         $_SESSION[$nombre] += $uds_add + $uds_remove;
 
-        //si la cantidad de uds de cada producto no es un nº negativo, puedo continuar:
+        //si la cantidad de uds ingresadas no es un nº negativo, puedo continuar:
         if ($_SESSION[$nombre] >= 0){
             //calculo la cantidad total de uds en el carrito:
             //sumando las uds de cada producto.
@@ -44,19 +46,25 @@ if (isset($_POST["actualizar"])) {
             //calculo el precio total del carrito,
             //multiplicando el precio por las uds de cada producto
             $totalPrecio += $_SESSION[$nombre] * $precio;
+
+            //y como todo es correcto, entonces está actualizado:
             $actualizado = true;
-            
-        }else{
+        
+        //Pero si las uds ingresadas es un nº negativo, sale mensaje de error en rojo:
+        } else {
             $mensaje = "<hr><b><font color=\"red\">No puede haber unidades negativas.</font></b><br> <hr>";
         }//else
         
-        //almaceno el total del carrito (uds y precio) en la sesión:
+        //almaceno los totales del carrito (uds y precio) en la sesión:
         $_SESSION['totalUds'] = $totalUds;
         $_SESSION['totalPrecio'] = $totalPrecio;
     }//foreach
 }//actualizar
 
+//Aplicamos las acciones que queremos para el botón Borrar:
 if(isset($_POST["borrar"])){
+    //como lo que quiero es que se borren todos los datos:
+    //pongo todos los valores de la sesión a 0.
     $_SESSION['totalUds'] = 0;
     $_SESSION['totalPrecio'] = 0;
     foreach ($productos as $nombre => $precio) {
@@ -68,12 +76,13 @@ if(isset($_POST["borrar"])){
 file_put_contents(RUTA_ARCHIVO, serialize($stock));
 ?>
 
+<!-- y genero pág html, en este caso aplico una tabla con toda la info de los productos. -->
 <html>
     <head>
         <title>Carrito Compra</title>
     </head>
     <body>
-        <h1>FRUTERÍA CHICHARRO</h1>
+        <h1>CROQUETERÍA CHICHARRO</h1>
         <h2>CARRO DE LA COMPRA</h2>
 
         <form action="" method="POST">
@@ -87,54 +96,71 @@ file_put_contents(RUTA_ARCHIVO, serialize($stock));
                 </tr>
             
             <?php
-                foreach ($productos as $nombre => $precio) {                   
+            //Recorro array productos para que se generen las mismas acciones por cada producto.
+            //en este caso una fila de la tabla por producto con lo sig en cada columna:
+                //label: contenido el nombre y precio de cada producto.
+                //input number para añadir uds: name el nombre del producto + _add.
+                //input number para quitar uds: name el nombre del producto + _remove.
+                //uds de cada producto almacenadas en sesión si hay o 0 si no las hay.
+                //uds almacenadas x precio de cada producto si las hay o 0 si no las hay.
+            foreach ($productos as $nombre => $precio) {                   
             ?>
-                    <tr>
-                        <td>
-                            <label for="<?php echo $nombre ?>"><?php echo "$nombre ($precio €/ud)" ?></label>
-                        </td>
-                        <td>
-                            <input type="number" name="<?php echo $nombre . "_add" ?>" min="0" 
-                                max="<?php echo $stock[$nombre] ?>" value=0 /> 
-                        </td>  
-                        <td>
-                            <input type="number" name="<?php echo $nombre . "_remove" ?>" max="0" value=0 />
-                        </td>
-                        <td>
-                            <?php echo isset($_SESSION[$nombre]) ? $_SESSION[$nombre] : 0 ; ?>
-                        </td>
-                        <td>
-                            <?php echo isset($_SESSION[$nombre]) ? ($_SESSION[$nombre] * $precio) . " €" : 0; ?>
-                        </td>
-                    </tr>
-                <?php
-                }//foreach 
-                echo $mensaje ?>
+                <tr>
+                    <td>
+                        <label><?php echo "$nombre ($precio €/ud)" ?></label>
+                    </td>
+                    <td>
+                        <input type="number" name="<?php echo $nombre . "_add" ?>" min="0" value=0 /> 
+                        <!-- <input type="number" name="<?php echo $nombre . "_add" ?>" min="0" 
+                            max="<?php echo $stock[$nombre] ?>" value=0 />  -->
+                    </td>  
+                    <td>
+                        <input type="number" name="<?php echo $nombre . "_remove" ?>" max="0" value=0 />
+                    </td>
+                    <td>
+                        <?php echo isset($_SESSION[$nombre]) ? $_SESSION[$nombre] : 0 ; ?>
+                    </td>
+                    <td>
+                        <?php echo isset($_SESSION[$nombre]) ? ($_SESSION[$nombre] * $precio) . " €" : 0; ?>
+                    </td>
+                </tr>
+            <?php
+            }//foreach 
+            echo $mensaje ?>
             </table>
             <br>
-        
+            
+            <!-- Muestro los totales del carrito almacenados en la sesión si existe y si no, valor 0. -->
             <p>Total de unidades en el carrito: <?php echo isset($_SESSION['totalUds']) ? $_SESSION['totalUds'] : 0; ?></p>
             <hr>
             <p><b>Precio total a pagar: <?php echo isset($_SESSION['totalPrecio']) ? $_SESSION['totalPrecio'] : 0; ?> €</b></p>
             <hr>
 
-            <?php echo "<h3>Stock disponible (precios y uds): </h3><ol>";
-                    foreach ($productos as $producto => $precio){
-                        if (isset($stock[$producto])){
-                            $cantidad = $stock[$producto];
-                            echo "<li>$producto - $precio € /ud - $cantidad uds.</li>"; 
-                        }
-                        
-                    }
-                    echo "</ol>";?>
+            <!-- Botones de actualizar y borrar -->
             <input type="submit" name="actualizar" value="Actualizar carrito">
             <input type="submit" name="borrar" value="Borrar carrito">
         </form>
+
+        <!-- Botón terminar comprar 
+             En un form aparte para aplicar un action al .php correspondiente a donde queremos dirigirnos con este botón.
+             Este botón está desactivado siempre que:
+                no hayamos actualizado (variable actualizado en false) 
+                no haya mensaje de error (de uds en negativo)
+                el total uds del carrito sea 0 o menos -->
         <form action="carritoFinal.php" method="POST">
             <input type="submit" name="terminar" value="Terminar compra" 
                 <?php echo (!$actualizado || !empty($mensaje) || $_SESSION['totalUds'] <= 0) ? 'disabled' : ''; ?>>
         </form>
 
+        <?php 
+            // como información, muestro el stock disponible de cada producto (reccorriendo el array stock):
+                echo "<h3>Stock disponible (precios y uds): </h3><ol>";
+                foreach ($stock as $nombre => $unidades){
+                    $precio = $productos[$nombre];
+                    echo "<li>$nombre ($precio € /ud): $unidades uds.</li>";       
+                }
+                echo "</ol>";
+            ?>
 
     </body>
 </html>
