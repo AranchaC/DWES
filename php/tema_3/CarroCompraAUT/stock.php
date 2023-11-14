@@ -4,6 +4,13 @@
 //defino constante llamada RUTA_ARCHIVO que contiene el archivo donde almacenaré el stock:
 define('RUTA_ARCHIVO', "stock.txt");
 
+// Creo un array con usuarios y sus contraseñas hash
+$usuarios = array(
+    "arancha" => password_hash("arancha", PASSWORD_DEFAULT),
+    "eva" => password_hash("eva", PASSWORD_DEFAULT),
+    "admin" => password_hash("admin", PASSWORD_DEFAULT)
+);
+
 //array de productos con precio para comprar:
 $productos = array(
     "jamón" => 5,

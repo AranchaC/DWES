@@ -9,7 +9,8 @@ $validHash = '$2y$10$utU7HvO3xUbp9B5owBNtuuJSkG8GczzGz1cTtpFvNBtAOzfloXSRC';
  
 */
 if (!isset($_SESSION['auth']) || (!isset($_SERVER['PHP_AUTH_USER']))
- || ($_SERVER['PHP_AUTH_USER'] != $validUser) ||  !password_verify($_SERVER['PHP_AUTH_PW'],$validHash)))
+ || ($_SERVER['PHP_AUTH_USER'] != $validUser) 
+ ||  !password_verify($_SERVER['PHP_AUTH_PW'],$validHash))
 {
     $_SESSION['auth']=1;
     header('WWW-Authenticate: Basic realm="Acceso restringido"');
