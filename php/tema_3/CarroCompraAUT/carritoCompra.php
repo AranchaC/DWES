@@ -76,11 +76,6 @@ if(isset($_POST["borrar"])){
 // Actualizar el archivo de stock
 file_put_contents(RUTA_ARCHIVO, serialize($stock));
 
-if ($nombreUsuario == "admin") {
-    echo "<br><b>Sesión de administrador.</b> <br><br>";
-} else {
-    echo "<br><b>Sesión de usuario.</b> <br><br>";
-}
 ?>
 
 <!-- y genero pág html, en este caso hago una tabla con toda la info de los productos -->

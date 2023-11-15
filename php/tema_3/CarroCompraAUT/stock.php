@@ -3,12 +3,21 @@
 
 //defino constante llamada RUTA_ARCHIVO que contiene el archivo donde almacenaré el stock:
 define('RUTA_ARCHIVO', "stock.txt");
+// $aran = password_hash("arancha", PASSWORD_DEFAULT);
+// $eva = password_hash("eva", PASSWORD_DEFAULT);
+// $rodri = password_hash("rodri", PASSWORD_DEFAULT);
+// $admin = password_hash("admin", PASSWORD_DEFAULT);
 
+// echo "$aran <br>";
+// echo "$eva <br>";
+// echo "$rodri <br>";
+// echo "$admin <br>";
 // Creo un array con usuarios y sus contraseñas hash
 $usuarios = array(
-    "arancha" => password_hash("arancha", PASSWORD_DEFAULT),
-    "eva" => password_hash("eva", PASSWORD_DEFAULT),
-    "admin" => password_hash("admin", PASSWORD_DEFAULT)
+    "arancha" => "$2y$10$/txOAf5xLmpk8w40pbHSA.VIibM3ION.XUjhYUxNZimTnRakZH8YC",
+    "eva" => "$2y$10\$RDJlk/wLwYkg4LEHFgOeSOZWGEjoxDdGGApmDi8ljmabVVNPLek9i",
+    "rodri" => "$2y$10\$orwHE8cTZH4JGDX/n4B0BO5ZvokauYVqkVTRQfD9oA.2158.HHZc.",
+    "admin" => "$2y$10$2/.G6E0U2aoxM8EF/1vlUu2BbiUY/BZhqaGIvU9eMQsdLlYdxF1dC",
 );
 
 //array de productos con precio para comprar:
