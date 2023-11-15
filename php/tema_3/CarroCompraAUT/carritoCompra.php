@@ -75,6 +75,12 @@ if(isset($_POST["borrar"])){
 
 // Actualizar el archivo de stock
 file_put_contents(RUTA_ARCHIVO, serialize($stock));
+
+if ($nombreUsuario == "admin") {
+    echo "<br><b>Sesión de administrador.</b> <br><br>";
+} else {
+    echo "<br><b>Sesión de usuario.</b> <br><br>";
+}
 ?>
 
 <!-- y genero pág html, en este caso hago una tabla con toda la info de los productos -->
@@ -157,6 +163,7 @@ file_put_contents(RUTA_ARCHIVO, serialize($stock));
             <input type="submit" name="terminar" value="Terminar compra" 
                 <?php echo (!$actualizado || !empty($mensaje) || $_SESSION['totalUds'] <= 0) ? 'disabled' : ''; ?>>
         </form>
+        <p></p><a href="logout.php">Cerrar sesión</a></p>
 
         <?php 
             // como información, muestro el stock disponible de cada producto (reccorriendo el array stock):

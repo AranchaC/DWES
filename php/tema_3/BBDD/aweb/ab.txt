@@ -1,0 +1,11 @@
+# Ejemplos de peticiones masivas concurrentes a los php de ejemplo:
+ab -n 50 -c 5  http://www.misitio.com/stockv1.php
+ab -T application/x-www-form-urlencoded -n 20 -c 5 -p post.txt http://www.misitio.com/stockv2.php
+
+# El fichero post.txt puede contener:
+cantidad=3
+
+
+# Si fueran varios parámetros en una línea separados por & los pares
+# nombre=valor, ejemplo:
+cantidad=3&otro=lo-que-sea

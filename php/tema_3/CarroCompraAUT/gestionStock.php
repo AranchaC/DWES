@@ -75,7 +75,7 @@ if (isset($_POST["actualizar"])) {
                     </tr>
                 <?php
                 }//foreach
-                echo $mensaje
+                echo "<p></p><a href=\"logout.php\">Cerrar sesión</a></p>";
                 ?>        
 
             </table><br>
@@ -87,6 +87,7 @@ if (isset($_POST["actualizar"])) {
                     echo "<li>$nombre ($precio € /pack): $unidades uds.</li>";       
                 }
                 echo "</ol>";
+                
             ?> 
         </form>
     </body>

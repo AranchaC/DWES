@@ -1,0 +1,7 @@
+Ejemplo de clase de decremento de un stock en base de datos para ilustrar el problema al hacerlo de forma
+concurrente y la solución:
+
+- stockv1.php: decrementa en 3 el stock de kiwis diciendo si lo pudo hacer y muestra stock actual.
+- stockv2.php: formulario para decrementar en una cantidad x el stock de kiwis y mostrar stock actual.
+- frutas.sql: base de datos para recrear con sudo mysql < frutas.sql
+- ab.txt: ejemplos de peticiones masivas con ab a los dos scripts php anteriores, el segundo pasando los parámetros por post (archivo post.txt)

@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include('stock.php');
 
 ?>
@@ -13,7 +13,6 @@ include('stock.php');
 </head>
 <body>
 <h1>CROQUETERÍA CHICHARRO</h1>
-
         <h3>Acceso: </h3>
 </body>
 </html>
