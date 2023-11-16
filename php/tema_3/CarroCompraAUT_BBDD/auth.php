@@ -39,7 +39,7 @@ if (! isset($_REQUEST["nombre"]) ||  ! isset($_REQUEST["contrasena"])) {
       }
       $_SESSION["authok"] = 1;
    } else {
-      // header("Location: index.php?redir=si");
+      header("Location: index.php?redir=si");
    }
 }
 
