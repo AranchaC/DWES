@@ -1,0 +1,1 @@
+a:7:{s:6:"jamón";i:20;s:8:"calabaza";i:20;s:5:"pollo";i:20;s:7:"bacalao";i:25;s:6:"gambas";i:30;s:5:"setas";i:35;s:9:"espinacas";i:40;}
