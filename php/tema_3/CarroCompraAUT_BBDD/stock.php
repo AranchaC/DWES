@@ -5,7 +5,17 @@
 define('RUTA_ARCHIVO', "stock.txt");
 
 //Conecto con la BBDD:
-$pdo = new PDO("mysql:dbname=croqueteria;host=localhost","administrador","administrador");
+// $pdo = new PDO("mysql:dbname=croqueteria;host=localhost","administrador","administrador");
+
+
+//hago try-catch para conectar a la bbdd y si falla, ver en la excepción
+//el tipo de error.
+try {
+    $pdo = new PDO("mysql:dbname=croqueteria;host=localhost", "administrador", "administrador");
+} catch (PDOException $e) {
+    die("Error al conectar a la base de datos: " . $e->getMessage());
+}
+
 
 //Obtengo los usuarios de BBDD:
 $usuarios = [];
