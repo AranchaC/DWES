@@ -3,6 +3,10 @@
 
 //defino constante llamada RUTA_ARCHIVO que contiene el archivo donde almacenaré el stock:
 define('RUTA_ARCHIVO', "stock.txt");
+
+// Genero hash para las contraseñas de los usuarios, y las saco por pantalla para copiarlas.
+//y comento lineas.
+
 // $aran = password_hash("arancha", PASSWORD_DEFAULT);
 // $eva = password_hash("eva", PASSWORD_DEFAULT);
 // $rodri = password_hash("rodri", PASSWORD_DEFAULT);
@@ -12,7 +16,8 @@ define('RUTA_ARCHIVO', "stock.txt");
 // echo "$eva <br>";
 // echo "$rodri <br>";
 // echo "$admin <br>";
-// Creo un array con usuarios y sus contraseñas hash
+
+// Creo un array con usuarios y sus contraseñas hash:
 $usuarios = array(
     "arancha" => "$2y$10$/txOAf5xLmpk8w40pbHSA.VIibM3ION.XUjhYUxNZimTnRakZH8YC",
     "eva" => "$2y$10\$RDJlk/wLwYkg4LEHFgOeSOZWGEjoxDdGGApmDi8ljmabVVNPLek9i",

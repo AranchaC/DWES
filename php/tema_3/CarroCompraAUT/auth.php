@@ -3,14 +3,18 @@
 session_start();
 include('stock.php');
 
+//creo variables para almacenar el usuario y contraseñas introducidas:
 $nombreUsuario = $_REQUEST["nombre"];
 $contrasenaUsuario = $_REQUEST["contrasena"];
 
+// Si no hay datos proporcionados, se redirige con un encabezado 'Location' a 
+//la página index.php con un indicador de redirección.
 if (! isset($_REQUEST["nombre"]) ||  ! isset($_REQUEST["contrasena"])) {
    header("Location: index.php?redir=si");
 } else {
-
+   //comparo si el nombreUsuario está dentro dentro del array usuarios (de la clave):
    if (array_key_exists($nombreUsuario, $usuarios) && 
+      //y comparo si la contrasenaUsuario se encuentra dentro del array usuarios (del valor):
       password_verify($contrasenaUsuario, $usuarios[$nombreUsuario])) {
       echo "<p>Autenticación correcta. Acceso concedido.</p>";
 
@@ -33,12 +37,14 @@ if (! isset($_REQUEST["nombre"]) ||  ! isset($_REQUEST["contrasena"])) {
             enlace al carrito de compras.
             enlace cerrar sesión:
          */
-         echo "<br>¡Hola Usuario!<br>";
+         echo "<br>¡Hola Usuario $nombreUsuario !<br>";
          echo "<p><a href=carritoCompra.php>Acceder al Carrito de Compras</a></p>";
          echo "<p></p><a href=\"logout.php\">Cerrar sesión</a></p>";
       }
       $_SESSION["authok"] = 1;
    } else {
+      //si la autenticación falla, se redirigie a la página inicial, mostrando mensaje de error
+      //que se puede ver en index.php:
       header("Location: index.php?redir=si");
    }
 }

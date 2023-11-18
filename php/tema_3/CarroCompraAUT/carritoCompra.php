@@ -1,6 +1,4 @@
 <?php
-//inicio sesión para poder almacenar datos:
-session_start();
 
 include('stock.php');
 include ('check-auth.php');

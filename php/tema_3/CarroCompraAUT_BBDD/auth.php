@@ -9,12 +9,14 @@ $contrasenaUsuario = $_REQUEST["contrasena"];
 if (! isset($_REQUEST["nombre"]) ||  ! isset($_REQUEST["contrasena"])) {
    header("Location: index.php?redir=si");
 } else {
-   echo "usuario introd: $nombreUsuario ";
-   echo "<br>";
-   echo  "Pass introd:  $contrasenaUsuario";
-   echo "<br>";
-   echo "Contraseña almacenada: " . $usuarios[$nombreUsuario] . "<br>";
-   echo "Contraseña introducida: " . $contrasenaUsuario . "<br>";
+   //LINEAS QUE ÚSÉ PARA DETECTAR ERROR SI FALLABA USUARIO O CONTRASEÑA, 
+   //Y VERIFICAR QUÉ HABÍA ALMACENADO Y QUÉ ESTABA INTRODUCIENDO.
+   // echo "usuario introd: $nombreUsuario ";
+   // echo "<br>";
+   // echo  "Pass introd:  $contrasenaUsuario";
+   // echo "<br>";
+   // echo "Contraseña almacenada: " . $usuarios[$nombreUsuario] . "<br>";
+   // echo "Contraseña introducida: " . $contrasenaUsuario . "<br>";
 
    if (isset($usuarios[$nombreUsuario])  && 
       password_verify($contrasenaUsuario, $usuarios[$nombreUsuario])) {
@@ -27,14 +29,14 @@ if (! isset($_REQUEST["nombre"]) ||  ! isset($_REQUEST["contrasena"])) {
          echo "<p><a href=infoStock.php>Acceso para ver el stock</a></p>";
          echo "<p></p><a href=\"logout.php\">Cerrar sesión</a></p>";
       } else {
-         echo "<br>¡Hola Usuario!<br>";
+         echo "<br>¡Hola Usuario $nombreUsuario !<br>";
          echo "<p><a href=carritoCompra.php>Acceder al Carrito de Compras</a></p>";
          echo "<p></p><a href=\"logout.php\">Cerrar sesión</a></p>";
       }
       $_SESSION["authok"] = 1;
    } elseif (! isset($usuarios[$nombreUsuario])) {
-      // header("Location: index.php?redir=si");
-      echo "<p>Nombre o pass incorrectos.</p>";
+      header("Location: index.php?redir=si");
+      // echo "<p>Nombre o pass incorrectos.</p>";
 
    } 
 }

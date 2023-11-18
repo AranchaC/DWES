@@ -30,7 +30,6 @@ if ($consulta = $pdo->query("SELECT * FROM usuarios")) {
     die("Problema accediendo a la base de datos");
 }
 
-
 // $aran = password_hash("arancha", PASSWORD_DEFAULT);
 // $eva = password_hash("eva", PASSWORD_DEFAULT);
 // $rodri = password_hash("rodri", PASSWORD_DEFAULT);

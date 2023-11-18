@@ -12,5 +12,7 @@ foreach ($stock as $nombre => $unidades){
     echo "<li>$nombre ($precio € /pack): $unidades uds.</li>";       
 }
 echo "</ol>";
+//creo enlace de cerrar sesión que dirige a logout.php:
+echo "<p></p><a href=\"logout.php\">Cerrar sesión</a></p>";
 
 ?>

@@ -1,5 +1,6 @@
 <?php
 
+//Include con stock.php que es donde están las variables generales.
 include('stock.php');
 
 ?>
@@ -18,13 +19,17 @@ include('stock.php');
 </html>
 
 <?php
+// Se verifica si la variable 'redir' está presente en la URL, indicando mensaje de error.
 if (isset($_REQUEST["redir"])) { 
    echo "<p>Nombre o contraseña incorrectos.</p>";
 }
+
+// Se llama a la función 'muestraFormulario' con la URL 'auth.php' como parámetro.
 muestraFormulario("auth.php");
 ?>
 
 <?php
+// Definición de la función 'muestraFormulario' que imprime un formulario de inicio de sesión.
 function muestraFormulario($url) {
  echo "
 <form method=POST action=\"$url\">

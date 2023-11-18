@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 include ('stock.php');
 include ('check-auth.php');
@@ -76,6 +75,8 @@ if (isset($_POST["actualizar"])) {
                     </tr>
                 <?php
                 }//foreach
+
+                //creo enlace de cerrar sesión que dirige a logout.php:
                 echo "<p></p><a href=\"logout.php\">Cerrar sesión</a></p>";
                 ?>        
 
