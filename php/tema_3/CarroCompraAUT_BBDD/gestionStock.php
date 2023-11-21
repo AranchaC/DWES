@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 include ('stock.php');
 include ('check-auth.php');
@@ -79,6 +78,12 @@ if (isset($_POST["actualizar"])) {
                 
                 //creo enlace de cerrar sesión que dirige a logout.php:
                 echo "<p></p><a href=\"logout.php\">Cerrar sesión</a></p>";
+
+                //creo enlace para ir a atrás a la página auth.php, guardando las claves de la sesión:
+                // echo '<p><a href="auth.php' . '?' . http_build_query($_GET) . '">Volver al inicio</a></p>';
+
+
+                echo "<p></p><a href=\"auth.php\">Atrás</a></p>";
                 ?>        
 
             </table><br>

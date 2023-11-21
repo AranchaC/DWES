@@ -31,7 +31,7 @@ if (! isset($_REQUEST["nombre"]) ||  ! isset($_REQUEST["contrasena"])) {
       } else {
          echo "<br>¡Hola Usuario $nombreUsuario !<br>";
          echo "<p><a href=carritoCompra.php>Acceder al Carrito de Compras</a></p>";
-         echo "<p></p><a href=\"logout.php\">Cerrar sesión</a></p>";
+         echo "<p></p><a href=\"auth.php\">Cerrar sesión</a></p>";
       }
       $_SESSION["authok"] = 1;
    } elseif (! isset($usuarios[$nombreUsuario])) {
