@@ -17,14 +17,23 @@ Más en:
 https://stackoverflow.com/questions/233507/how-to-log-out-user-from-web-site-using-basic-authentication
 y los ejemplos de: https://www.php.net/manual/en/features.http-auth.php
 */
+
+//VARIABLES DONDE ALAMCENAR USUARIO Y CONTRASEÑA HASH.
 $validUser = "pepe";
 $validHash = '$2y$10$utU7HvO3xUbp9B5owBNtuuJSkG8GczzGz1cTtpFvNBtAOzfloXSRC';
 $random = uniqId(); // para evitar la caché, especialmente en Firefox
 
 // Si no se mandan credenciales, se piden:
+//ACCEDEMOS A ESTAS CREDENCIALES CON $_SERVER['PHP_AUTH_USER'], QUE ES UNA VARIBALE PREDEFINIDAD 
+//ALMACENADA EN EL ARRAY SERVER.
 if (!isset($_SERVER['PHP_AUTH_USER'])) {
+
+    //SE ENVÍA UN HEADER DE AUTENTICACIÓN REQUERIDA PARA MOSTRAR VENTANA EMERGENTE
+    //PARA PONER CLAVES Y SE MUESTRA UN MENSAJE:
     header('WWW-Authenticate: Basic realm="Acceso restringuido"');
     header('HTTP/1.0 401 Unauthorized');
+
+    //MENSAJES A MOSTRAR SI DAMOS A CANCELAR:
     echo "<h1>Acceso denegado 1</h1>";
     // URL entera para quitar parámetros extra:
     echo "<a href=\"logout-hash.php?id=$random\">Volver a intentar</a>";
@@ -32,6 +41,9 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
 }
 
 // Caso usuario válido:
+//HACEMOS LA VERIFICACIÓN COMPARANDO LOS VALORES INTRODUCIDOS CON LAS VARIABLES PREDEFINIDAS ESTABLECIDAS
+//EN 'PHP_AUTH_USER' PARA EL USUARIO Y EN 'PHP_AUTH_PW' PARA LA CONTRASEÑA.
+//ESTAS VARIABLES ESTÁN EL ARRAY SERVER, Y ACCEDEMOS A ELLAS DE LA SIGUIENTE MANERA.
 if (($_SERVER['PHP_AUTH_USER'] == $validUser) && password_verify($_SERVER['PHP_AUTH_PW'],$validHash)) {
 	echo "<h1>Bienvenido $validUser</h1>";
 	// No funciona con Chrome, si en Firefox
@@ -39,6 +51,8 @@ if (($_SERVER['PHP_AUTH_USER'] == $validUser) && password_verify($_SERVER['PHP_A
     echo "<a href=\"logout-hash.php?id=$random\">Cerrar sesión</a>";
 }
 // caso credenciales incorrectas:
+//Y SI FALLA LA VERIFICACIÓN, MOSTRAMOS MENSAJE 
+//Y ENLACE PARA VOLVER A QUE TE PIDAN LAS CLAVES, REDIRIGIENDO A LOGOUT-HASH.PHP:
 else {
 	echo "<h1>Acceso denegado 3</h1>";
     echo "<a href=\"logout-hash.php?id=$random\">Volver a intentar</a>";
