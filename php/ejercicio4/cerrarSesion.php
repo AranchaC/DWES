@@ -3,6 +3,6 @@ include('Ejercicio4.php');
 
 session_start();
 session_destroy();
-exit();
+header('Location: Ejercicio4.php');
 
 ?>
